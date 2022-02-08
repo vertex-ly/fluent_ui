@@ -400,7 +400,7 @@ class _TopNavigationPane extends StatelessWidget {
           ),
           if (pane.autoSuggestBox != null)
             Container(
-              margin: const EdgeInsets.only(left: 30.0),
+              margin: const EdgeInsetsDirectional.only(start: 30.0),
               constraints: const BoxConstraints(
                 minWidth: 100.0,
                 maxWidth: 215.0,
@@ -656,7 +656,7 @@ class _OpenNavigationPaneState extends State<_OpenNavigationPane>
                     Expanded(
                       child: Align(
                         child: widget.pane.header!,
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                       ),
                     ),
                   ]);

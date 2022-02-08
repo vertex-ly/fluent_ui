@@ -174,6 +174,7 @@ class PaneItem extends NavigationPaneItem {
       onPressed: onPressed,
       cursor: mouseCursor,
       builder: (context, states) {
+
         TextStyle textStyle = baseStyle.merge(
           selected
               ? theme.selectedTextStyle?.resolve(states)
@@ -225,8 +226,8 @@ class PaneItem extends NavigationPaneItem {
                           clipBehavior: Clip.none,
                           children: [
                             icon,
-                            Positioned(
-                              right: -8,
+                            PositionedDirectional(
+                              end: -8,
                               top: -8,
                               child: infoBadge!,
                             ),
@@ -260,7 +261,7 @@ class PaneItem extends NavigationPaneItem {
                   Expanded(child: textResult),
                   if (infoBadge != null)
                     Padding(
-                      padding: const EdgeInsets.only(right: 6.0),
+                      padding: const EdgeInsetsDirectional.only(end: 6.0),
                       child: infoBadge!,
                     ),
                 ]),
@@ -288,8 +289,8 @@ class PaneItem extends NavigationPaneItem {
                 return Stack(key: itemKey, clipBehavior: Clip.none, children: [
                   result,
                   if (infoBadge != null)
-                    Positioned(
-                      right: -8,
+                    PositionedDirectional(
+                      end: -8,
                       top: -8,
                       child: infoBadge!,
                     ),
@@ -307,7 +308,7 @@ class PaneItem extends NavigationPaneItem {
           child: AnimatedContainer(
             duration: theme.animationDuration ?? Duration.zero,
             curve: theme.animationCurve ?? standartCurve,
-            margin: const EdgeInsets.only(right: 6.0, left: 6.0, bottom: 4.0),
+            margin: const EdgeInsetsDirectional.only(end: 6.0, start: 6.0, bottom: 4.0),
             decoration: BoxDecoration(
               color: () {
                 final ButtonState<Color?> tileColor = this.tileColor ??
@@ -423,7 +424,7 @@ class PaneItemHeader extends NavigationPaneItem {
         softWrap: false,
         maxLines: 1,
         overflow: TextOverflow.fade,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.start,
       ),
     );
   }

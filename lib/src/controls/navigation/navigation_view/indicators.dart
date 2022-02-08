@@ -37,9 +37,10 @@ class NavigationIndicator extends StatefulWidget {
     if (pane.selected == null) return child;
     assert(debugCheckHasFluentTheme(context));
     final theme = NavigationPaneTheme.of(context);
+     final textDirectionality = Directionality.of(context);
 
-    final left = theme.iconPadding?.left ?? theme.labelPadding?.left ?? 0;
-    final right = theme.labelPadding?.right ?? theme.iconPadding?.right ?? 0;
+    final left = theme.iconPadding?.resolve(textDirectionality).left ?? theme.labelPadding?.resolve(textDirectionality).left ?? 0;
+    final right = theme.labelPadding?.resolve(textDirectionality).right ?? theme.iconPadding?.resolve(textDirectionality).right ?? 0;
 
     return StickyNavigationIndicator(
       index: pane.selected!,
@@ -48,7 +49,7 @@ class NavigationIndicator extends StatefulWidget {
       color: theme.highlightColor,
       curve: Curves.easeIn,
       axis: axis,
-      topPadding: EdgeInsets.only(left: left, right: right),
+      topPadding: EdgeInsetsDirectional.only(start: left, end: right),
     );
   }
 
@@ -251,7 +252,7 @@ class StickyNavigationIndicator extends NavigationIndicator {
         );
 
   /// The padding applied to the indicator if [axis] is [Axis.vertical]
-  final EdgeInsets topPadding;
+  final EdgeInsetsGeometry topPadding;
 
   @override
   _StickyNavigationIndicatorState createState() =>
@@ -373,6 +374,7 @@ class _StickyNavigationIndicatorState
 
   @override
   Widget build(BuildContext context) {
+    final directionality = Directionality.of(context);
     if (offsets == null || sizes == null) return widget.child;
     return AnimatedBuilder(
       animation: controller,
@@ -386,8 +388,9 @@ class _StickyNavigationIndicatorState
                 : sizes!.first.height - (indicatorPadding / 2),
             padding: widget.axis == Axis.horizontal
                 ? indicatorPadding
-                : widget.topPadding.left + 4.0,
+                : widget.topPadding.resolve(directionality).left + 4.0,
             p1: p1,
+            rtl: directionality == TextDirection.rtl ,
             p1Start: p1Start,
             p1End: p1End,
             p2: p2,
@@ -420,6 +423,7 @@ class _StickyPainter extends CustomPainter {
   final Axis axis;
 
   final double strokeWidth;
+  final bool rtl;
 
   const _StickyPainter({
     this.y = 0,
@@ -432,6 +436,7 @@ class _StickyPainter extends CustomPainter {
     required this.p2End,
     required this.color,
     required this.axis,
+    this.rtl = false,
     this.strokeWidth = 3,
   });
 
@@ -449,18 +454,19 @@ class _StickyPainter extends CustomPainter {
 
     // debugPrint('from $first to $second within $size');
 
+    final x = rtl ? size.width - padding : padding;
     switch (axis) {
       case Axis.horizontal:
         canvas.drawLine(
-          Offset(padding, y + first),
-          Offset(padding, y + second),
+          Offset(x, y + first),
+          Offset(x, y + second),
           paint,
         );
         break;
       case Axis.vertical:
         canvas.drawLine(
-          Offset(padding + first, y),
-          Offset(padding + second, y),
+          Offset(x + first, y),
+          Offset(x + second, y),
           paint,
         );
         break;

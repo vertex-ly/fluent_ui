@@ -285,7 +285,7 @@ class _TabViewState extends State<TabView> {
       width: _kButtonWidth,
       height: _kTileHeight - 10,
       child: Padding(
-        padding: const EdgeInsets.only(left: 2),
+        padding: const EdgeInsetsDirectional.only(start: 2),
         child: IconButton(
           icon: icon,
           onPressed: onPressed,
@@ -345,14 +345,14 @@ class _TabViewState extends State<TabView> {
     Widget tabBar = Column(children: [
       Container(
         margin: const EdgeInsets.only(top: 4.5),
-        padding: const EdgeInsets.only(left: 8),
+        padding: const EdgeInsetsDirectional.only(start: 8),
         height: _kTileHeight,
         width: double.infinity,
         child: Row(
           children: [
             if (widget.header != null)
               Padding(
-                padding: const EdgeInsets.only(right: 12.0),
+                padding: const EdgeInsetsDirectional.only(end: 12.0),
                 child: DefaultTextStyle(
                   style: headerFooterTextStyle,
                   child: widget.header!,
@@ -455,7 +455,7 @@ class _TabViewState extends State<TabView> {
             ),
             if (widget.footer != null)
               Padding(
-                padding: const EdgeInsets.only(left: 12.0),
+                padding: const EdgeInsetsDirectional.only(start: 12.0),
                 child: DefaultTextStyle(
                   style: headerFooterTextStyle,
                   child: widget.footer!,
@@ -652,7 +652,7 @@ class __TabState extends State<_Tab>
                 children: [
                   if (widget.tab.icon != null)
                     Padding(
-                      padding: const EdgeInsets.only(right: 8),
+                      padding: const EdgeInsetsDirectional.only(end: 8),
                       child: widget.tab.icon!,
                     ),
                   if (widget.tabWidthBehavior != TabWidthBehavior.compact ||
@@ -681,7 +681,7 @@ class __TabState extends State<_Tab>
                                   CloseButtonVisibilityMode.onHover &&
                               states.isHovering)))
                     Padding(
-                      padding: const EdgeInsets.only(left: 2.0),
+                      padding: const EdgeInsetsDirectional.only(start: 2.0),
                       child: FocusTheme(
                         data: const FocusThemeData(
                           primaryBorder: BorderSide.none,

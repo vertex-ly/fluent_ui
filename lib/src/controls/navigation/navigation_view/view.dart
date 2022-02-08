@@ -129,6 +129,7 @@ class NavigationViewState extends State<NavigationView> {
 
   @override
   Widget build(BuildContext context) {
+
     assert(debugCheckHasFluentTheme(context));
     assert(debugCheckHasFluentLocalizations(context));
 
@@ -291,15 +292,15 @@ class NavigationViewState extends State<NavigationView> {
                     _compactOverlayOpen && consts.maxWidth / 2.5 > openSize;
 
                 paneResult = Stack(children: [
-                  AnimatedPositioned(
+                  AnimatedPositionedDirectional(
                     duration: theme.animationDuration ?? Duration.zero,
                     curve: theme.animationCurve ?? Curves.linear,
                     top: widget.appBar?.height ?? 0.0,
-                    left: openedWithoutOverlay
+                    start: openedWithoutOverlay
                         ? openSize
                         : pane.size?.compactWidth ??
                             _kCompactNavigationPanelWidth,
-                    right: 0,
+                    end: 0,
                     bottom: 0,
                     child: content,
                   ),
@@ -676,9 +677,9 @@ class _NavigationAppBar extends StatelessWidget {
                     : _kOpenNavigationPanelWidth;
         result = Stack(children: [
           if (appBar.actions != null)
-            Positioned(
-              left: width,
-              right: 0.0,
+            PositionedDirectional(
+              start: width,
+              end: 0.0,
               top: 0.0,
               bottom: 0.0,
               child: Align(

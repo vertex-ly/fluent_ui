@@ -79,8 +79,8 @@ class NavigationPaneThemeData with Diagnosticable {
   /// is used.
   final Color? highlightColor;
 
-  final EdgeInsets? labelPadding;
-  final EdgeInsets? iconPadding;
+  final EdgeInsetsGeometry? labelPadding;
+  final EdgeInsetsGeometry? iconPadding;
 
   final TextStyle? itemHeaderTextStyle;
   final ButtonState<TextStyle?>? selectedTextStyle;
@@ -131,7 +131,7 @@ class NavigationPaneThemeData with Diagnosticable {
       unselectedTextStyle: ButtonState.resolveWith((states) {
         return states.isDisabled ? disabledTextStyle : typography.body!;
       }),
-      labelPadding: const EdgeInsets.only(right: 10.0),
+      labelPadding: const EdgeInsetsDirectional.only(end: 10.0),
       iconPadding: const EdgeInsets.symmetric(horizontal: 10.0),
     );
   }
@@ -142,8 +142,8 @@ class NavigationPaneThemeData with Diagnosticable {
     double t,
   ) {
     return NavigationPaneThemeData(
-      iconPadding: EdgeInsets.lerp(a?.iconPadding, b?.iconPadding, t),
-      labelPadding: EdgeInsets.lerp(a?.labelPadding, b?.labelPadding, t),
+      iconPadding: EdgeInsetsGeometry.lerp(a?.iconPadding, b?.iconPadding, t),
+      labelPadding: EdgeInsetsGeometry.lerp(a?.labelPadding, b?.labelPadding, t),
       tileColor: ButtonState.lerp(a?.tileColor, b?.tileColor, t, Color.lerp),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       itemHeaderTextStyle:
