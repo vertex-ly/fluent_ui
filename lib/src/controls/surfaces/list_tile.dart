@@ -79,7 +79,7 @@ class ListTile extends StatelessWidget {
       child: Row(children: [
         if (leading != null)
           Padding(
-            padding: const EdgeInsets.only(right: 14),
+            padding: const EdgeInsetsDirectional.only(end: 14),
             child: leading,
           ),
         Expanded(

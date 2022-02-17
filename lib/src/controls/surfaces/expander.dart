@@ -202,6 +202,7 @@ class ExpanderState extends State<Expander>
     final children = [
       HoverButton(
         onPressed: _handlePressed,
+        margin: EdgeInsets.zero,
         builder: (context, states) {
           return AnimatedContainer(
             duration: expanderAnimationDuration,

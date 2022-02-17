@@ -111,6 +111,7 @@ class TextFormBox extends FormField<String> {
                 keyboardType: keyboardType,
                 textInputAction: textInputAction,
                 style: style,
+                padding: padding ?? kTextBoxPadding,
                 strutStyle: strutStyle,
                 textAlign: textAlign,
                 textAlignVertical: textAlignVertical,
