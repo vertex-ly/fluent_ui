@@ -36,7 +36,7 @@ export 'src/navigation/route.dart';
 
 export 'src/controls/navigation/bottom_navigation.dart';
 export 'src/layout/page.dart';
-
+export 'src/utils/popup.dart';
 export 'src/controls/inputs/buttons/base.dart';
 export 'src/controls/inputs/buttons/theme.dart';
 export 'src/controls/inputs/buttons/button.dart';
