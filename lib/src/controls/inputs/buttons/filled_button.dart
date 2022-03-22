@@ -47,7 +47,7 @@ class FilledButton extends Button {
       if (theme.brightness.isDark) {
         return theme.accentColor.darker;
       } else {
-        theme.accentColor.lighter;
+       return theme.accentColor.lighter;
       }
     } else if (states.isHovering) {
       if (theme.brightness.isDark) {
