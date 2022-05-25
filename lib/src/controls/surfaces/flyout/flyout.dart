@@ -1,8 +1,6 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../../utils/popup.dart';
-
 export 'controller.dart';
 
 class Flyout extends StatefulWidget {

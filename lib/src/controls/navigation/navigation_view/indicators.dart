@@ -118,13 +118,13 @@ class NavigationIndicatorState<T extends NavigationIndicator> extends State<T> {
   void initState() {
     super.initState();
     fetch();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {});
     });
   }
 
   void fetch() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final _offsets = widget.pane.effectiveItems.getPaneItemsOffsets(
         widget.pane.paneKey,
       );
