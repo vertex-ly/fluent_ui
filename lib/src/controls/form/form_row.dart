@@ -45,7 +45,7 @@ class FormRow extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: DefaultTextStyle(
-                style: const TextStyle(
+                style: FluentTheme.of(context).typography.caption!.copyWith(
                   color: Colors.warningPrimaryColor,
                   fontWeight: FontWeight.w500,
                 ),

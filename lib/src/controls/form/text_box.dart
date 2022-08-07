@@ -584,7 +584,8 @@ class _TextBoxState extends State<TextBox>
       formatters.add(LengthLimitingTextInputFormatter(widget.maxLength));
     }
 
-    final TextStyle textStyle = TextStyle(
+    final style = widget.style ?? const TextStyle();
+    final TextStyle textStyle = style.copyWith(
       color: enabled ? theme.inactiveColor : theme.disabledColor,
     );
 

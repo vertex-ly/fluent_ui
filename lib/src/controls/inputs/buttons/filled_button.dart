@@ -33,7 +33,7 @@ class FilledButton extends Button {
   ButtonStyle? themeStyleOf(BuildContext context) {
     assert(debugCheckHasFluentTheme(context));
     final theme = FluentTheme.of(context);
-    final style =   theme.buttonTheme.filledButtonStyle ?? const ButtonStyle();
+    final style =  theme.buttonTheme.filledButtonStyle?.merge(this.style) ?? this.style ?? const ButtonStyle();
     return ButtonStyle(
       backgroundColor: ButtonState.resolveWith((states) => backgroundColor(theme, states)),
       foregroundColor: ButtonState.resolveWith((states) => backgroundColor(theme, states).basedOnLuminance()),
@@ -45,8 +45,6 @@ class FilledButton extends Button {
       border: style.border,
       iconSize: style.iconSize,
     );
-
-
   }
 
   static Color backgroundColor(ThemeData theme, Set<ButtonStates> states) {
