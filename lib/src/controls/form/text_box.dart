@@ -111,6 +111,7 @@ class TextBox extends StatefulWidget {
     this.headerStyle,
     this.iconButtonThemeData,
     this.decoration,
+    this.textDirection,
   })  : assert(obscuringCharacter.length == 1),
         smartDashesType = smartDashesType ??
             (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
@@ -228,7 +229,7 @@ class TextBox extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
 
   final bool? enabled;
-
+  final TextDirection? textDirection;
   final double cursorWidth;
   final double? cursorHeight;
   final Radius cursorRadius;
@@ -638,6 +639,7 @@ class _TextBoxState extends State<TextBox>
           child: EditableText(
             key: editableTextKey,
             controller: controller,
+            textDirection: widget.textDirection,
             readOnly: widget.readOnly,
             toolbarOptions: widget.toolbarOptions,
             showCursor: widget.showCursor,
