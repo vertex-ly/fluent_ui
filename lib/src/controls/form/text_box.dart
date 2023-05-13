@@ -16,8 +16,7 @@ enum OverlayVisibilityMode {
   always,
 }
 
-class _TextBoxSelectionGestureDetectorBuilder
-    extends TextSelectionGestureDetectorBuilder {
+class _TextBoxSelectionGestureDetectorBuilder extends TextSelectionGestureDetectorBuilder {
   _TextBoxSelectionGestureDetectorBuilder({
     required _TextBoxState state,
   })  : _state = state,
@@ -26,23 +25,14 @@ class _TextBoxSelectionGestureDetectorBuilder
   final _TextBoxState _state;
 
   @override
-  void onSingleTapUp(TapUpDetails details) {
-    if (_state._clearGlobalKey.currentContext != null) {
-      final RenderBox renderBox = _state._clearGlobalKey.currentContext!
-          .findRenderObject() as RenderBox;
-      final Offset localOffset =
-          renderBox.globalToLocal(details.globalPosition);
-      if (renderBox.hitTest(BoxHitTestResult(), position: localOffset)) {
-        return;
-      }
-    }
+  void onSingleTapUp(TapDragUpDetails details) {
     super.onSingleTapUp(details);
     _state._requestKeyboard();
-    if (_state.widget.onTap != null) _state.widget.onTap!();
+    _state.widget.onTap?.call();
   }
 
   @override
-  void onDragSelectionEnd(DragEndDetails details) {
+  void onDragSelectionEnd(TapDragEndDetails details) {
     _state._requestKeyboard();
   }
 }
@@ -113,10 +103,8 @@ class TextBox extends StatefulWidget {
     this.decoration,
     this.textDirection,
   })  : assert(obscuringCharacter.length == 1),
-        smartDashesType = smartDashesType ??
-            (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
-        smartQuotesType = smartQuotesType ??
-            (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
+        smartDashesType = smartDashesType ?? (obscureText ? SmartDashesType.disabled : SmartDashesType.enabled),
+        smartQuotesType = smartQuotesType ?? (obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled),
         assert(maxLines == null || maxLines > 0),
         assert(minLines == null || minLines > 0),
         assert(
@@ -127,16 +115,14 @@ class TextBox extends StatefulWidget {
           !expands || (maxLines == null && minLines == null),
           'minLines and maxLines must be null when expands is true.',
         ),
-        assert(!obscureText || maxLines == 1,
-            'Obscured fields cannot be multiline.'),
+        assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
         assert(maxLength == null || maxLength > 0),
         assert(
             !identical(textInputAction, TextInputAction.newline) ||
                 maxLines == 1 ||
                 !identical(keyboardType, TextInputType.text),
             'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.'),
-        keyboardType = keyboardType ??
-            (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+        keyboardType = keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
         toolbarOptions = toolbarOptions ??
             (obscureText
                 ? const ToolbarOptions(
@@ -268,47 +254,32 @@ class TextBox extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<TextEditingController>('controller', controller,
-          defaultValue: null))
-      ..add(DiagnosticsProperty<FocusNode>('focusNode', focusNode,
-          defaultValue: null))
+      ..add(DiagnosticsProperty<TextEditingController>('controller', controller, defaultValue: null))
+      ..add(DiagnosticsProperty<FocusNode>('focusNode', focusNode, defaultValue: null))
       ..add(DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding))
       ..add(StringProperty('placeholder', placeholder))
-      ..add(
-          DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle))
-      ..add(DiagnosticsProperty<OverlayVisibilityMode>(
-          'prefix', prefix == null ? null : prefixMode))
-      ..add(DiagnosticsProperty<OverlayVisibilityMode>(
-          'suffix', suffix == null ? null : suffixMode))
-      ..add(DiagnosticsProperty<TextInputType>('keyboardType', keyboardType,
-          defaultValue: TextInputType.text))
+      ..add(DiagnosticsProperty<TextStyle>('placeholderStyle', placeholderStyle))
+      ..add(DiagnosticsProperty<OverlayVisibilityMode>('prefix', prefix == null ? null : prefixMode))
+      ..add(DiagnosticsProperty<OverlayVisibilityMode>('suffix', suffix == null ? null : suffixMode))
+      ..add(DiagnosticsProperty<TextInputType>('keyboardType', keyboardType, defaultValue: TextInputType.text))
       ..add(DiagnosticsProperty<TextStyle>('style', style, defaultValue: null))
-      ..add(FlagProperty('autofocus',
-          value: autofocus, ifFalse: 'manual focus', defaultValue: false))
-      ..add(StringProperty('obscuringCharacter', obscuringCharacter,
-          defaultValue: '•'))
-      ..add(DiagnosticsProperty<bool>('obscureText', obscureText,
-          defaultValue: false))
-      ..add(DiagnosticsProperty<bool>('autocorrect', autocorrect,
-          defaultValue: true))
+      ..add(FlagProperty('autofocus', value: autofocus, ifFalse: 'manual focus', defaultValue: false))
+      ..add(StringProperty('obscuringCharacter', obscuringCharacter, defaultValue: '•'))
+      ..add(DiagnosticsProperty<bool>('obscureText', obscureText, defaultValue: false))
+      ..add(DiagnosticsProperty<bool>('autocorrect', autocorrect, defaultValue: true))
       ..add(EnumProperty<SmartDashesType>('smartDashesType', smartDashesType,
-          defaultValue:
-              obscureText ? SmartDashesType.disabled : SmartDashesType.enabled))
+          defaultValue: obscureText ? SmartDashesType.disabled : SmartDashesType.enabled))
       ..add(EnumProperty<SmartQuotesType>('smartQuotesType', smartQuotesType,
-          defaultValue:
-              obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled))
-      ..add(DiagnosticsProperty<bool>('enableSuggestions', enableSuggestions,
-          defaultValue: true))
+          defaultValue: obscureText ? SmartQuotesType.disabled : SmartQuotesType.enabled))
+      ..add(DiagnosticsProperty<bool>('enableSuggestions', enableSuggestions, defaultValue: true))
       ..add(IntProperty('maxLines', maxLines, defaultValue: 1))
       ..add(IntProperty('minLines', minLines, defaultValue: null))
       ..add(DiagnosticsProperty<bool>('expands', expands, defaultValue: false))
       ..add(IntProperty('maxLength', maxLength, defaultValue: null))
-      ..add(FlagProperty('maxLengthEnforced',
-          value: maxLengthEnforced, ifTrue: 'max length enforced'))
+      ..add(FlagProperty('maxLengthEnforced', value: maxLengthEnforced, ifTrue: 'max length enforced'))
       ..add(DoubleProperty('cursorWidth', cursorWidth, defaultValue: 2.0))
       ..add(DoubleProperty('cursorHeight', cursorHeight, defaultValue: null))
-      ..add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius,
-          defaultValue: null))
+      ..add(DiagnosticsProperty<Radius>('cursorRadius', cursorRadius, defaultValue: null))
       ..add(FlagProperty(
         'selectionEnabled',
         value: selectionEnabled,
@@ -325,8 +296,7 @@ class TextBox extends StatefulWidget {
         scrollPhysics,
         defaultValue: null,
       ))
-      ..add(EnumProperty<TextAlign>('textAlign', textAlign,
-          defaultValue: TextAlign.start))
+      ..add(EnumProperty<TextAlign>('textAlign', textAlign, defaultValue: TextAlign.start))
       ..add(DiagnosticsProperty<TextAlignVertical>(
         'textAlignVertical',
         textAlignVertical,
@@ -341,12 +311,12 @@ class _TextBoxState extends State<TextBox>
   final GlobalKey _clearGlobalKey = GlobalKey();
 
   RestorableTextEditingController? _controller;
-  TextEditingController get _effectiveController =>
-      widget.controller ?? _controller!.value;
+
+  TextEditingController get _effectiveController => widget.controller ?? _controller!.value;
 
   FocusNode? _focusNode;
-  FocusNode get _effectiveFocusNode =>
-      widget.focusNode ?? (_focusNode ??= FocusNode());
+
+  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
 
   bool _showSelectionHandles = false;
 
@@ -356,8 +326,7 @@ class _TextBoxState extends State<TextBox>
   bool get forcePressEnabled => true;
 
   @override
-  final GlobalKey<EditableTextState> editableTextKey =
-      GlobalKey<EditableTextState>();
+  final GlobalKey<EditableTextState> editableTextKey = GlobalKey<EditableTextState>();
 
   @override
   bool get selectionEnabled => widget.selectionEnabled;
@@ -367,8 +336,7 @@ class _TextBoxState extends State<TextBox>
   @override
   void initState() {
     super.initState();
-    _selectionGestureDetectorBuilder =
-        _TextBoxSelectionGestureDetectorBuilder(state: this);
+    _selectionGestureDetectorBuilder = _TextBoxSelectionGestureDetectorBuilder(state: this);
     if (widget.controller == null) {
       _createLocalController();
     }
@@ -414,9 +382,7 @@ class _TextBoxState extends State<TextBox>
 
   void _createLocalController([TextEditingValue? value]) {
     assert(_controller == null);
-    _controller = value == null
-        ? RestorableTextEditingController()
-        : RestorableTextEditingController.fromValue(value);
+    _controller = value == null ? RestorableTextEditingController() : RestorableTextEditingController.fromValue(value);
     if (!restorePending) {
       _registerController();
     }
@@ -455,8 +421,7 @@ class _TextBoxState extends State<TextBox>
     return false;
   }
 
-  void _handleSelectionChanged(
-      TextSelection selection, SelectionChangedCause? cause) {
+  void _handleSelectionChanged(TextSelection selection, SelectionChangedCause? cause) {
     if (cause == SelectionChangedCause.longPress) {
       _editableText?.bringIntoView(selection.base);
     }
@@ -520,9 +485,7 @@ class _TextBoxState extends State<TextBox>
   }
 
   bool get _hasDecoration {
-    return widget.placeholder != null ||
-        widget.prefix != null ||
-        widget.suffix != null;
+    return widget.placeholder != null || widget.prefix != null || widget.suffix != null;
   }
 
   TextAlignVertical get _textAlignVertical {
@@ -578,8 +541,7 @@ class _TextBoxState extends State<TextBox>
     assert(debugCheckHasFluentTheme(context));
     final ThemeData theme = FluentTheme.of(context);
     final TextEditingController controller = _effectiveController;
-    final List<TextInputFormatter> formatters =
-        widget.inputFormatters ?? <TextInputFormatter>[];
+    final List<TextInputFormatter> formatters = widget.inputFormatters ?? <TextInputFormatter>[];
     const Offset cursorOffset = Offset(0, -1);
     if (widget.maxLength != null && widget.maxLengthEnforced) {
       formatters.add(LengthLimitingTextInputFormatter(widget.maxLength));
@@ -590,8 +552,7 @@ class _TextBoxState extends State<TextBox>
       color: enabled ? theme.inactiveColor : theme.disabledColor,
     );
 
-    final Brightness keyboardAppearance =
-        widget.keyboardAppearance ?? theme.brightness;
+    final Brightness keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
     final Color cursorColor = theme.inactiveColor;
     final Color disabledColor = theme.disabledColor;
     final Color backgroundColor = _effectiveFocusNode.hasFocus
@@ -700,8 +661,7 @@ class _TextBoxState extends State<TextBox>
           ? null
           : () {
               if (!controller.selection.isValid) {
-                controller.selection =
-                    TextSelection.collapsed(offset: controller.text.length);
+                controller.selection = TextSelection.collapsed(offset: controller.text.length);
               }
               _requestKeyboard();
             },
@@ -755,8 +715,7 @@ class _TextBoxState extends State<TextBox>
         );
       }(),
       builder: (context, text, child) {
-        if (!_showOutsidePrefixWidget(text) &&
-            !_showOutsideSuffixWidget(text)) {
+        if (!_showOutsidePrefixWidget(text) && !_showOutsideSuffixWidget(text)) {
           return child!;
         }
         return Row(children: [

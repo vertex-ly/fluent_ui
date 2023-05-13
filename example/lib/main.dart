@@ -141,9 +141,9 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: kIsWeb
             ? null
             : MoveWindow(
-                child: Row(
+                child: const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [Spacer(), WindowButtons()],
+                  children: [Spacer(), WindowButtons()],
                 ),
               ),
       ),
