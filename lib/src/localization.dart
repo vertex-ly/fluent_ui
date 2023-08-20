@@ -58,6 +58,30 @@ abstract class FluentLocalizations {
   /// The label for the select all button on the text selection controls
   String get selectAllButtonLabel;
 
+  String get cutActionLabel;
+
+  String get cutShortcut;
+
+  String get cutActionTooltip;
+
+  String get copyActionLabel;
+
+  String get copyActionTooltip;
+
+  String get pasteActionLabel;
+
+  String get pasteShortcut;
+
+  String get pasteActionTooltip;
+
+  String get selectAllActionLabel;
+
+  String get selectAllShortcut;
+
+  String get selectAllActionTooltip;
+
+  String get copyShortcut;
+
   /// The label used by [TabView]'s new button
   String get newTabLabel;
 
@@ -171,24 +195,56 @@ class DefaultFluentLocalizations implements FluentLocalizations {
   /// This method is typically used to create a [LocalizationsDelegate].
   /// The [MaterialApp] does so by default.
   static Future<FluentLocalizations> load(Locale locale) {
-    return SynchronousFuture<FluentLocalizations>(
-        const DefaultFluentLocalizations());
+    return SynchronousFuture<FluentLocalizations>(const DefaultFluentLocalizations());
   }
 
-  static const LocalizationsDelegate<FluentLocalizations> delegate =
-      _FluentLocalizationsDelegate();
+  static const LocalizationsDelegate<FluentLocalizations> delegate = _FluentLocalizationsDelegate();
+
+  @override
+  String get cutActionLabel => 'Cut';
+
+  @override
+  String get copyActionLabel => 'Copy';
+
+  @override
+  String get pasteActionLabel => 'Paste';
+
+  @override
+  String get selectAllActionLabel => 'Select all';
+
+  @override
+  String get cutActionTooltip => 'Remove the selected content and put it in the clipboard';
+
+  @override
+  String get pasteActionTooltip => 'Inserts the contents of the clipboard at the current location';
+
+  @override
+  String get selectAllActionTooltip => 'Select all content';
+
+  @override
+  String get copyActionTooltip => 'Copy the selected content to the clipboard';
+
+  @override
+  String get cutShortcut => '';
+
+  @override
+  String get pasteShortcut => '';
+
+  @override
+  String get selectAllShortcut => '';
+
+  @override
+  String get copyShortcut => '';
 }
 
-class _FluentLocalizationsDelegate
-    extends LocalizationsDelegate<FluentLocalizations> {
+class _FluentLocalizationsDelegate extends LocalizationsDelegate<FluentLocalizations> {
   const _FluentLocalizationsDelegate();
 
   @override
   bool isSupported(Locale locale) => locale.languageCode == 'en';
 
   @override
-  Future<FluentLocalizations> load(Locale locale) =>
-      DefaultFluentLocalizations.load(locale);
+  Future<FluentLocalizations> load(Locale locale) => DefaultFluentLocalizations.load(locale);
 
   @override
   bool shouldReload(_FluentLocalizationsDelegate old) => false;

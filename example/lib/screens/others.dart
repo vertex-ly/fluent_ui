@@ -184,12 +184,12 @@ class _OthersState extends State<Others> {
             ),
           ),
         ),
-        InfoLabel(
+        const InfoLabel(
           label: 'Progress indicators',
           child: Mica(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: Row(children: const [
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(children: [
                 Padding(
                   padding: EdgeInsets.all(6),
                   child: ProgressBar(value: 50),

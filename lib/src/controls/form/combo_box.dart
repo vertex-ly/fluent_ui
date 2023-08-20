@@ -86,7 +86,6 @@ class _ComboboxScrollBehavior extends ScrollBehavior {
   @override
   TargetPlatform getPlatform(BuildContext context) => defaultTargetPlatform;
 
-  @override
   Widget buildViewportChrome(
           BuildContext context, Widget child, AxisDirection axisDirection) =>
       child;

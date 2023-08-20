@@ -169,8 +169,8 @@ class _RatingBarState extends State<RatingBar> {
       );
     }
 
-    switch (intent) {
-      case _AdjustSliderIntent.right():
+    switch (intent.type) {
+      case _SliderAdjustmentType.right:
         switch (directionality) {
           case TextDirection.rtl:
             decrease();
@@ -180,7 +180,7 @@ class _RatingBarState extends State<RatingBar> {
             break;
         }
         break;
-      case _AdjustSliderIntent.left():
+      case _SliderAdjustmentType.left:
         switch (directionality) {
           case TextDirection.rtl:
             increase();
@@ -190,10 +190,10 @@ class _RatingBarState extends State<RatingBar> {
             break;
         }
         break;
-      case _AdjustSliderIntent.up():
+      case _SliderAdjustmentType.up:
         increase();
         break;
-      case _AdjustSliderIntent.down():
+      case _SliderAdjustmentType.down:
         decrease();
         break;
     }
@@ -283,7 +283,7 @@ class _RatingBarState extends State<RatingBar> {
   }
 }
 
-class _AdjustSliderIntent extends Intent {
+ class _AdjustSliderIntent extends Intent {
   const _AdjustSliderIntent({required this.type});
 
   const _AdjustSliderIntent.right() : type = _SliderAdjustmentType.right;

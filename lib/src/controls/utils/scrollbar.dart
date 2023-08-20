@@ -25,7 +25,7 @@ class Scrollbar extends RawScrollbar {
   }) : super(
           key: key,
           child: child,
-          isAlwaysShown: isAlwaysShown,
+          thumbVisibility: isAlwaysShown,
           controller: controller,
           timeToFade: timeToFade,
           fadeDuration: fadeDuration,

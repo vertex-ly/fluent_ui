@@ -322,7 +322,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       final OverlayState overlayState = Overlay.of(
         context,
         debugRequiredFor: widget,
-      )!;
+      );
       overlayState.insert(_entry!);
     }
     SemanticsService.tooltip(_tooltipMessage);
@@ -372,7 +372,7 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
     final OverlayState overlayState = Overlay.of(
       context,
       debugRequiredFor: widget,
-    )!;
+    );
 
     final RenderBox box = context.findRenderObject()! as RenderBox;
     Offset target = box.localToGlobal(
@@ -490,7 +490,6 @@ class _TooltipState extends State<Tooltip> with SingleTickerProviderStateMixin {
       return widget.child ?? const SizedBox();
     }
     assert(debugCheckHasFluentTheme(context));
-    assert(Overlay.of(context, debugRequiredFor: widget) != null);
     final ThemeData theme = FluentTheme.of(context);
     final TooltipThemeData tooltipTheme =
         TooltipTheme.of(context).merge(widget.style);
