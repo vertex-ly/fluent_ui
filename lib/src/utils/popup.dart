@@ -179,7 +179,7 @@ class _PopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
       size: size,
       childSize: childSize,
       target: target,
-      preferBelow: false,
+      preferBelow: true,
       verticalOffset: verticalOffset,
     );
   }
