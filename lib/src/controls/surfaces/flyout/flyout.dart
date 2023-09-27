@@ -11,10 +11,11 @@ class Flyout extends StatefulWidget {
     required this.contentWidth,
     required this.controller,
     this.verticalOffset = 24,
+    this.preferBelow = true,
   }) : super(key: key);
 
   final Widget child;
-
+  final bool preferBelow;
   final Widget content;
   final double contentWidth;
   final FlyoutController controller;
@@ -65,6 +66,7 @@ class _FlyoutState extends State<Flyout> {
     return PopUp(
       key: popupKey,
       child: widget.child,
+      preferBelow: widget.preferBelow,
       content: (context) => widget.content,
       contentWidth: widget.contentWidth,
       verticalOffset: widget.verticalOffset,

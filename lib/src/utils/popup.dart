@@ -12,6 +12,7 @@ class PopUp<T> extends StatefulWidget {
     this.contentHeight = 0,
     this.contentWidth,
     this.verticalOffset = 0,
+    this.preferBelow = true,
   }) : super(key: key);
 
   final Widget child;
@@ -19,6 +20,7 @@ class PopUp<T> extends StatefulWidget {
   final double contentHeight;
   final double? contentWidth;
   final double verticalOffset;
+  final bool preferBelow;
 
   @override
   PopUpState<T> createState() => PopUpState<T>();
@@ -43,10 +45,9 @@ class PopUpState<T> extends State<PopUp<T>> {
       content: widget.content(context),
       buttonRect: itemRect,
       elevation: 4,
-      capturedThemes:
-          InheritedTheme.capture(from: context, to: navigator.context),
-      transitionAnimationDuration:
-          FluentTheme.of(context).mediumAnimationDuration,
+      preferBelow: widget.preferBelow,
+      capturedThemes: InheritedTheme.capture(from: context, to: navigator.context),
+      transitionAnimationDuration: FluentTheme.of(context).mediumAnimationDuration,
       verticalOffset: widget.verticalOffset,
       barrierLabel: FluentLocalizations.of(context).modalBarrierDismissLabel,
     );
@@ -88,8 +89,7 @@ class _PopUpScrollBehavior extends ScrollBehavior {
   Widget buildViewportChrome(context, child, axisDirection) => child;
 
   @override
-  ScrollPhysics getScrollPhysics(BuildContext context) =>
-      const ClampingScrollPhysics();
+  ScrollPhysics getScrollPhysics(BuildContext context) => const ClampingScrollPhysics();
 }
 
 class _PopUpMenu<T> extends StatefulWidget {
@@ -150,6 +150,7 @@ class _PopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
     required this.textDirection,
     required this.target,
     required this.verticalOffset,
+    required this.preferBelow,
     this.width,
   });
 
@@ -159,12 +160,12 @@ class _PopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
   final Offset target;
   final double verticalOffset;
   final double? width;
+  final bool preferBelow;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     final double maxHeight = constraints.maxHeight;
-    final double width =
-        this.width ?? math.min(constraints.maxWidth, buttonRect.width);
+    final double width = this.width ?? math.min(constraints.maxWidth, buttonRect.width);
     return BoxConstraints(
       minWidth: width,
       maxWidth: width,
@@ -179,7 +180,7 @@ class _PopUpMenuRouteLayout<T> extends SingleChildLayoutDelegate {
       size: size,
       childSize: childSize,
       target: target,
-      preferBelow: true,
+      preferBelow: preferBelow,
       verticalOffset: verticalOffset,
     );
   }
@@ -201,10 +202,12 @@ class _PopUpRoute<T> extends PopupRoute<T> {
     required this.transitionAnimationDuration,
     this.barrierLabel,
     this.width,
+    this.preferBelow = true,
     required this.verticalOffset,
     this.acrylicDisabled = false,
   });
 
+  final bool preferBelow;
   final bool acrylicDisabled;
   final Widget content;
   final double contentHeight;
@@ -240,6 +243,7 @@ class _PopUpRoute<T> extends PopupRoute<T> {
         buttonRect: buttonRect,
         elevation: elevation,
         width: width,
+        preferBelow: preferBelow,
         capturedThemes: capturedThemes,
         verticalOffset: verticalOffset,
       );
@@ -268,8 +272,9 @@ class _PopUpRoutePage<T> extends StatelessWidget {
     required this.verticalOffset,
     this.style,
     this.width,
+    this.preferBelow = true,
   }) : super(key: key);
-
+  final bool preferBelow;
   final _PopUpRoute<T> route;
   final BoxConstraints constraints;
   final Widget content;
@@ -308,6 +313,7 @@ class _PopUpRoutePage<T> extends StatelessWidget {
               textDirection: textDirection,
               verticalOffset: verticalOffset,
               width: width,
+              preferBelow: preferBelow,
             ),
             child: capturedThemes.wrap(menu),
           );
