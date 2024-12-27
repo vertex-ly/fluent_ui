@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -292,7 +291,7 @@ class _ComboboxMenuState<T> extends State<_ComboboxMenu<T>> {
           // be retrieved at paint time (after layout), not at build time.
           getSelectedItemOffset: () => route.getItemOffset(route.selectedIndex),
           backgroundColor:
-              FluentTheme.of(context).acrylicBackgroundColor.withOpacity(1.0),
+              FluentTheme.of(context).acrylicBackgroundColor.withValues(alpha: 1.0),
           elevation: route.elevation.toDouble(),
         ),
         child: Semantics(
@@ -1216,7 +1215,7 @@ class _ComboboxState<T> extends State<Combobox<T>> with WidgetsBindingObserver {
         case Brightness.light:
           return Colors.grey[190];
         case Brightness.dark:
-          return Colors.white.withOpacity(0.7);
+          return Colors.white.withValues(alpha: 0.7);
       }
     } else {
       if (widget.iconDisabledColor != null) return widget.iconDisabledColor!;
@@ -1225,7 +1224,7 @@ class _ComboboxState<T> extends State<Combobox<T>> with WidgetsBindingObserver {
         case Brightness.light:
           return Colors.grey[150];
         case Brightness.dark:
-          return Colors.white.withOpacity(0.10);
+          return Colors.white.withValues(alpha: 0.10);
       }
     }
   }
@@ -1238,9 +1237,9 @@ class _ComboboxState<T> extends State<Combobox<T>> with WidgetsBindingObserver {
   Orientation _getOrientation(BuildContext context) {
     Orientation? result = MediaQuery.maybeOf(context)?.orientation;
     if (result == null) {
-      // If there's no MediaQuery, then use the window aspect to determine
+      // If there's no MediaQuery, then use the FlutterView.of(context aspect to determine
       // orientation.
-      final Size size = window.physicalSize;
+      final Size size = View.of(context).physicalSize;
       result = size.width > size.height
           ? Orientation.landscape
           : Orientation.portrait;

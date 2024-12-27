@@ -31,7 +31,7 @@ class Settings extends StatelessWidget {
       const radius = BorderRadius.zero;
       final shadow = [
         BoxShadow(
-          color: Colors.black.withOpacity(0.2),
+          color: Colors.black.withValues(alpha: 0.2),
           offset: const Offset(1, 1),
           blurRadius: 10.0,
         ),
@@ -154,7 +154,7 @@ class Settings extends StatelessWidget {
                       effect: mode,
                       color: FluentTheme.of(context)
                           .acrylicBackgroundColor
-                          .withOpacity(0.2),
+                          .withValues(alpha: 0.2),
                       dark: darkMode,
                     );
                   }

@@ -135,11 +135,9 @@ class _AcrylicState extends State<Acrylic> {
     assert(debugCheckHasFluentTheme(context));
     assert(widget.elevation >= 0, "The elevation must be always positive");
     assert(_properties.tintAlpha >= 0, "The tintAlpha must be always positive");
-    assert(_properties.luminosityAlpha >= 0,
-        "The luminosityAlpha must be always positive");
+    assert(_properties.luminosityAlpha >= 0, "The luminosityAlpha must be always positive");
 
-    final Color _shadowColor =
-        widget.shadowColor ?? FluentTheme.of(context).shadowColor;
+    final Color _shadowColor = widget.shadowColor ?? FluentTheme.of(context).shadowColor;
 
     return _AcrylicInheritedWidget(
       state: this,
@@ -252,24 +250,19 @@ class _AnimatedAcrylicState extends AnimatedWidgetBaseState<AnimatedAcrylic> {
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
-    _tint = visitor(_tint, widget.tint,
-        (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
-    _tintAlpha = visitor(_tintAlpha, widget.tintAlpha,
-            (dynamic value) => Tween<double>(begin: value as double))
+    _tint = visitor(_tint, widget.tint, (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
+    _tintAlpha = visitor(_tintAlpha, widget.tintAlpha, (dynamic value) => Tween<double>(begin: value as double))
         as Tween<double>?;
-    _luminosityAlpha = visitor(_luminosityAlpha, widget.luminosityAlpha,
-            (dynamic value) => Tween<double>(begin: value as double))
+    _luminosityAlpha =
+        visitor(_luminosityAlpha, widget.luminosityAlpha, (dynamic value) => Tween<double>(begin: value as double))
+            as Tween<double>?;
+    _blurAmount = visitor(_blurAmount, widget.blurAmount, (dynamic value) => Tween<double>(begin: value as double))
         as Tween<double>?;
-    _blurAmount = visitor(_blurAmount, widget.blurAmount,
-            (dynamic value) => Tween<double>(begin: value as double))
-        as Tween<double>?;
-    _shape = visitor(_shape, widget.shape,
-            (dynamic value) => m.ShapeBorderTween(begin: value as ShapeBorder))
+    _shape = visitor(_shape, widget.shape, (dynamic value) => m.ShapeBorderTween(begin: value as ShapeBorder))
         as m.ShapeBorderTween?;
-    _shadowColor = visitor(_shadowColor, widget.shadowColor,
-        (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
-    _elevation = visitor(_elevation, widget.elevation,
-            (dynamic value) => Tween<double>(begin: value as double))
+    _shadowColor =
+        visitor(_shadowColor, widget.shadowColor, (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
+    _elevation = visitor(_elevation, widget.elevation, (dynamic value) => Tween<double>(begin: value as double))
         as Tween<double>?;
   }
 
@@ -313,13 +306,9 @@ class AcrylicProperties {
         shape = const RoundedRectangleBorder();
 
   @override
-  int get hashCode => hashValues(
-        tint,
-        tintAlpha,
-        luminosityAlpha,
-        blurAmount,
-        shape,
-      );
+  @override
+  int get hashCode =>
+      tint.hashCode ^ tintAlpha.hashCode ^ luminosityAlpha.hashCode ^ blurAmount.hashCode ^ shape.hashCode;
 
   @override
   bool operator ==(Object other) {
@@ -335,10 +324,7 @@ class AcrylicProperties {
   }
 
   static AcrylicProperties of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_AcrylicInheritedWidget>()!
-        .state
-        ._properties;
+    return context.dependOnInheritedWidgetOfExactType<_AcrylicInheritedWidget>()!.state._properties;
   }
 }
 
@@ -481,11 +467,8 @@ class AcrylicHelper {
       const double minLuminosityOpacity = 0.15;
       const double maxLuminosityOpacity = 1.03;
 
-      const double luminosityOpacityRangeMax =
-          maxLuminosityOpacity - minLuminosityOpacity;
-      double mappedTintOpacity =
-          ((tintColor.alpha / 255.0) * luminosityOpacityRangeMax) +
-              minLuminosityOpacity;
+      const double luminosityOpacityRangeMax = maxLuminosityOpacity - minLuminosityOpacity;
+      double mappedTintOpacity = ((tintColor.alpha / 255.0) * luminosityOpacityRangeMax) + minLuminosityOpacity;
 
       // Finally, combine the luminosity opacity and the HsvV-clamped tint color
       return Color.fromRGBO(
